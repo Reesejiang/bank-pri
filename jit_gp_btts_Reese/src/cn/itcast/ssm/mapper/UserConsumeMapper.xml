@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.ssm.mapper.UserConsumeMapper" >
+  <resultMap id="BaseResultMap" type="cn.itcast.ssm.po.UserConsume" >
+    <id column="userConsumeId" property="userConsumeId" jdbcType="INTEGER" />
+    <result column="consumeSum" property="consumeSum" jdbcType="REAL" />
+    <result column="consumeDis" property="consumeDis" jdbcType="REAL" />
+    <result column="consumePoints" property="consumePoints" jdbcType="REAL" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    userConsumeId, consumeSum, consumeDis, consumePoints, userName
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.itcast.ssm.po.UserConsumeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_consume
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_consume
+    where userConsumeId = #{userConsumeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_consume
+    where userConsumeId = #{userConsumeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.itcast.ssm.po.UserConsumeExample" >
+    delete from user_consume
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.itcast.ssm.po.UserConsume" >
+    insert into user_consume (userConsumeId, consumeSum, consumeDis, 
+      consumePoints, userName)
+    values (#{userConsumeId,jdbcType=INTEGER}, #{consumeSum,jdbcType=REAL}, #{consumeDis,jdbcType=REAL}, 
+      #{consumePoints,jdbcType=REAL}, #{userName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.itcast.ssm.po.UserConsume" >
+    insert into user_consume
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userConsumeId != null" >
+        userConsumeId,
+      </if>
+      <if test="consumeSum != null" >
+        consumeSum,
+      </if>
+      <if test="consumeDis != null" >
+        consumeDis,
+      </if>
+      <if test="consumePoints != null" >
+        consumePoints,
+      </if>
+      <if test="userName != null" >
+        userName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userConsumeId != null" >
+        #{userConsumeId,jdbcType=INTEGER},
+      </if>
+      <if test="consumeSum != null" >
+        #{consumeSum,jdbcType=REAL},
+      </if>
+      <if test="consumeDis != null" >
+        #{consumeDis,jdbcType=REAL},
+      </if>
+      <if test="consumePoints != null" >
+        #{consumePoints,jdbcType=REAL},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.itcast.ssm.po.UserConsumeExample" resultType="java.lang.Integer" >
+    select count(*) from user_consume
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_consume
+    <set >
+      <if test="record.userConsumeId != null" >
+        userConsumeId = #{record.userConsumeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.consumeSum != null" >
+        consumeSum = #{record.consumeSum,jdbcType=REAL},
+      </if>
+      <if test="record.consumeDis != null" >
+        consumeDis = #{record.consumeDis,jdbcType=REAL},
+      </if>
+      <if test="record.consumePoints != null" >
+        consumePoints = #{record.consumePoints,jdbcType=REAL},
+      </if>
+      <if test="record.userName != null" >
+        userName = #{record.userName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_consume
+    set userConsumeId = #{record.userConsumeId,jdbcType=INTEGER},
+      consumeSum = #{record.consumeSum,jdbcType=REAL},
+      consumeDis = #{record.consumeDis,jdbcType=REAL},
+      consumePoints = #{record.consumePoints,jdbcType=REAL},
+      userName = #{record.userName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itcast.ssm.po.UserConsume" >
+    update user_consume
+    <set >
+      <if test="consumeSum != null" >
+        consumeSum = #{consumeSum,jdbcType=REAL},
+      </if>
+      <if test="consumeDis != null" >
+        consumeDis = #{consumeDis,jdbcType=REAL},
+      </if>
+      <if test="consumePoints != null" >
+        consumePoints = #{consumePoints,jdbcType=REAL},
+      </if>
+      <if test="userName != null" >
+        userName = #{userName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userConsumeId = #{userConsumeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.itcast.ssm.po.UserConsume" >
+    update user_consume
+    set consumeSum = #{consumeSum,jdbcType=REAL},
+      consumeDis = #{consumeDis,jdbcType=REAL},
+      consumePoints = #{consumePoints,jdbcType=REAL},
+      userName = #{userName,jdbcType=VARCHAR}
+    where userConsumeId = #{userConsumeId,jdbcType=INTEGER}
+  </update>
+</mapper>

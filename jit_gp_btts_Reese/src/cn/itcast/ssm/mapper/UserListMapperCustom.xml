@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.ssm.mapper.UserListMapperCustom">
+
+	<!-- 定义用户查询的SQL片段，就是用户查询的条件 -->
+	<sql id="query_userList_where">
+		<!-- 使用动态sql，通过if判断，满足条件进行sql拼接 -->
+		<!-- 用户查询条件通过UserListQueryVo包装对象 中userListCustom属性传递 -->
+		<if test="userListCustom!=null">
+			<if test="userListCustom.userName!=null and userListCustom.userName!=''">
+				user_list.userName like '%${userListCustom.userName}%'
+			</if>
+		</if>
+		
+	</sql>
+	<!-- 用户列表查询 -->
+	<!-- parameterType传入包装对象(包装了查询条件) resultType建议使用扩展对象 -->
+	<select id="findUserList" parameterType="cn.itcast.ssm.po.UserQueryVo"
+		resultType="cn.itcast.ssm.po.UserListCustom">
+		select user_list.* from user_list
+		<where>
+			<include refid="query_userList_where"></include>
+		</where>
+
+	</select>
+	
+	<!-- 删除用户信息 -->
+	<delete id="deleteuserList" parameterType="String">
+       delete from user_list where userName=#{userName}
+    </delete>
+    
+    <!-- 添加用户 -->
+	<insert id="insertuserList" parameterType="UserList">  
+        insert into user_list(userName,password,name,userVolume,cardNum,cardPassword) values(#{userName},#{password},#{name},#{userVolume},#{cardNum},#{cardPassword})  
+    </insert> 
+</mapper>
